@@ -18,10 +18,11 @@ class UserAdmin(BaseUserAdmin):
         "full_name",
         "username",
     )
-    ordering = "username"
+    ordering = ("username",)
 
     fieldsets = BaseUserAdmin.fieldsets + (
         ("Información personal", {"fields": ("full_name",)}),
     )
 
-    admin.site.register(User, BaseUserAdmin)
+
+admin.site.register(User, UserAdmin)
