@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inicio</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+      a {
+        color: white;
+        text-decoration: underline;
+      }
+      a:hover {
+        color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>FINTEC</h1>
+    <h2>Registrar Movimiento</h2>
+        <form method="POST">
+             {% csrf_token %}
+            {{ form.as_p }}
+             <button type="submit">Guardar</button>
+        </form>
+  </body>
+</html>

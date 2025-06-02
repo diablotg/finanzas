@@ -1,12 +1,18 @@
 from django.db import models
-from users.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class TransactionCategory(models.Model):
-    user = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, default="General")
+
+    class Meta:
+        unique_together = ("name", "user")
 
     def __str__(self):
-        return self.user
+        return self.name
 
 
 class Transaction(models.Model):
