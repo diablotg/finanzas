@@ -4,7 +4,10 @@ from django.db import models
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
-    full_name = models.CharField(max_length=100)
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}".strip()
 
     def __str__(self):
-        return self.username
+        return f"{self.username}({self.email})"
