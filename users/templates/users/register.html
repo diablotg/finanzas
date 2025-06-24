@@ -1,10 +1,45 @@
-{% extends "base.html" %} {% block title %}Registro de Usuario{% endblock %}
-{%block content %}
+{% extends "base.html" %}
+{% block title %}Registro de Usuario{% endblock %}
+
+{% block content %}
 
 <h2>Formulario de registro</h2>
+
 <form method="post">
-  {% csrf_token %} {{ form.as_p }}
+  {% csrf_token %}
+
+  {# Errores generales del formulario (ej. contraseñas no coinciden) #}
+  {% if form.non_field_errors %}
+    <div style="color: red; margin-bottom: 10px;">
+      {% for error in form.non_field_errors %}
+        <p>{{ error }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {# Campos del formulario con errores y ayuda #}
+  {% for field in form %}
+    <div style="margin-bottom: 15px;">
+      <label for="{{ field.id_for_label }}"><strong>{{ field.label }}:</strong></label><br>
+      {{ field }}
+
+      {# Ayuda del campo (ej. reglas de contraseña) #}
+      {% if field.help_text %}
+        <small style="color: #555;">{{ field.help_text|safe }}</small>
+      {% endif %}
+
+      {# Errores específicos del campo #}
+      {% if field.errors %}
+        <ul style="color: red; margin: 0; padding-left: 15px;">
+          {% for error in field.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  {% endfor %}
+
   <button type="submit">Registrarse</button>
 </form>
 
-{%endblock%}
+{% endblock %}
