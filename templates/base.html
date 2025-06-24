@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}FINTEC{% endblock %}</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+      a {
+        color: white;
+        text-decoration: underline;
+      }
+      a:hover {
+        color: #ccc;
+      }
+      form {
+        margin-top: 1rem;
+      }
+      input,
+      button {
+        margin-bottom: 0.5rem;
+        padding: 0.4rem;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>FINTEC</h1>
+      <nav>
+        <!-- enlaces de navegación -->
+      </nav>
+    </header>
+    <main>{% block content %}{% endblock %}</main>
+  </body>
+</html>

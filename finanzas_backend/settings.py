@@ -47,7 +47,7 @@ ROOT_URLCONF = "finanzas_backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "users", "templates")],  # Verifica esta línea
+        "DIRS": [os.path.join(BASE_DIR, "templates")],  # Verifica esta línea
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

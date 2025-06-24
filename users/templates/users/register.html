@@ -1,29 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Registro</title>
-    <style>
-      body {
-        background-color: black;
-        color: white;
-        font-family: Arial, sans-serif;
-      }
-      a {
-        color: white;
-        text-decoration: underline;
-      }
-      a:hover {
-        color: #ccc;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Formulario de registro</h1>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Registrarse</button>
-    </form>
-      <p>En proceso.</p>
-  </body>
-</html>
+{% extends "base.html" %} {% block title %}Registro de Usuario{% endblock %}
+{%block content %}
+
+<h2>Formulario de registro</h2>
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Registrarse</button>
+</form>
+
+{%endblock%}

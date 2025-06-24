@@ -1,52 +1,12 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Inicio</title>
-    <style>
-      body {
-        background-color: black;
-        color: white;
-        font-family: Arial, sans-serif;
-      }
-      a {
-        color: white;
-        text-decoration: underline;
-      }
-      a:hover {
-        color: #ccc;
-      }
-      form {
-        margin-top: 1rem;
-      }
-      input,
-      button {
-        margin-bottom: 0.5rem;
-        padding: 0.4rem;
-        border-radius: 4px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>FINTEC</h1>
-    <h2>Bienvenido!</h2>
+{%extends "base.html"%} 
 
-    {% if user.is_authenticated %}
-    <p>
-      Hola, {{ user.username }} | <a href="{% url 'logout' %}">Cerrar sesión</a>
-    </p>
-    {% else %}
-    <p><a href="{% url 'register' %}">Registrarse</a></p>
+{% block title %}Inicio de Sesión{% endblock %} 
 
-    <h3>Iniciar sesión</h3>
-    <form method="post" action="{% url 'home' %}">
-      {% csrf_token %} {{ form.non_field_errors }} {{ form.username.label_tag }}
-      {{ form.username }} {{ form.password.label_tag }} {{ form.password }}
-      <button type="submit">Entrar</button>
-    </form>
 
-    {% if messages %} {% for message in messages %}
-    <p style="color: red">{{ message }}</p>
-    {% endfor %} {% endif %} {% endif %}
-  </body>
-</html>
+{% block content %}
+<h2>Bienvenido!</h2>
+
+<p><a href="{% url 'register' %}">Registrarse</a></p>
+<p><a href="{% url 'login' %}">Iniciar sesión</a></p>
+
+{%endblock%}
