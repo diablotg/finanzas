@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Nueva Categoria{% endblock %}
+
+{% block content %}
+<h2>{{request.user.first_name}} Crea Una Nueva Categoria</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  
+  <button type="submit">Guardar Categoria</button>
+</form>
+
+<a href="{% url 'dashboard' %}">Volver al Dashboard</a>
+{% endblock %}

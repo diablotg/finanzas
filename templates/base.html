@@ -2,6 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+
     <title>{% block title %}FINTEC{% endblock %}</title>
     <style>
       body {
@@ -25,15 +26,60 @@
         padding: 0.4rem;
         border-radius: 4px;
       }
+
+      /* Estilos para mensajes */
+      .messages {
+        list-style-type: none;
+        padding: 0;
+        margin: 1rem 0;
+      }
+
+      .messages li {
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-radius: 4px;
+      }
+
+      .success {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .error {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .info {
+        background-color: #2196f3;
+        color: white;
+      }
+
+      .warning { 
+        background-color: #ff9800;
+        color: black;
+      }
     </style>
   </head>
   <body>
     <header>
       <h1>FINTEC</h1>
       <nav>
-        <!-- enlaces de navegación -->
+        <!-- enl -->
       </nav>
     </header>
-    <main>{% block content %}{% endblock %}</main>
+    <main>
+
+      
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
   </body>
 </html>

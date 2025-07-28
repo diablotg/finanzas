@@ -29,11 +29,18 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             auth_login(request, user)
-            return redirect(
-                "dashboard"
-            )  # Redirect to a dashboard or home page after login
+            return redirect("dashboard")  # Redireccionamiento del Dashboard
 
     else:
         form = AuthenticationForm()
 
     return render(request, "users/login.html", {"form": form})
+
+
+def logout_view(request):
+    from django.contrib.auth import logout
+
+    logout(request)
+    return redirect(
+        "home"
+    )  # Redireccionamiento a la página de inicio después de cerrar sesión

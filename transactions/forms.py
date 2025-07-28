@@ -7,6 +7,10 @@ class TransactionCategoryForm(forms.ModelForm):
         model = TransactionCategory
         fields = ["name"]
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+
 
 class TransactionForm(forms.ModelForm):
     class Meta:

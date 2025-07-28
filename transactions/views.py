@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import TransactionForm
 from .forms import TransactionCategoryForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.db import IntegrityError
 
 
 @login_required
@@ -20,6 +22,37 @@ def dashboard(request):
 
 
 @login_required
+def create_category(request):
+    if request.method == "POST":
+        form = TransactionCategoryForm(request.POST, user=request.user)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.user = request.user
+
+            try:
+                category.save()
+                messages.success(
+                    request, f'Category: "{category.name}" created successfully!'
+                )
+                return redirect("category")
+            except IntegrityError:
+                form.add_error("name", "This category already exists for your account.")
+    else:
+        form = TransactionCategoryForm(user=request.user)
+
+    categories = request.user.transactioncategory_set.all()
+
+    return render(
+        request,
+        "transactions/create_category.html",
+        {
+            "form": form,
+            "categories": categories,
+        },
+    )
+
+
+@login_required
 def create_transaction(request):
     if request.method == "POST":
         category_form = TransactionCategoryForm(request.POST, user=request.user)
@@ -30,7 +63,7 @@ def create_transaction(request):
             transaction = transaction_form.save(commit=False)
             transaction.user = request.user
             transaction.save()
-            return redirect("create_transaction")
+            return redirect("create")
     else:
         category_form = TransactionCategoryForm(user=request.user)
         transaction_form = TransactionForm(user=request.user)
