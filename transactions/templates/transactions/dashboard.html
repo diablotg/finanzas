@@ -1,1 +1,105 @@
-dashboard
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Dashboard</h2>
+
+    <div class="row">
+        <!-- Formulario Transacciones -->
+        <div class="col-md-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    Agregar Transacción
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ transaction_form.as_p }}
+                        <button type="submit" name="transaction_submit" class="btn btn-primary">
+                            Guardar Transacción
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario Categorías -->
+        <div class="col-md-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    Agregar Categoría
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ category_form.as_p }}
+                        <button type="submit" name="category_submit" class="btn btn-secondary">
+                            Guardar Categoría
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Listado de Transacciones -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-info text-white">
+            Tus Transacciones
+        </div>
+        <div class="card-body">
+            {% if transactions %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Categoría</th>
+                            <th>Monto</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in transactions %}
+                        <tr>
+                            <td>{{ t.date|date:"d/m/Y H:i" }}</td>
+                            <td>{{ t.category.name }}</td>
+                            <td>${{ t.amount }}</td>
+                            <td>
+                                {% if t.transaction_type == "IN" %}
+                                    <span class="badge bg-success">Ingreso</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Egreso</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ t.description }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No tienes transacciones registradas todavía.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Listado de Categorías -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            Tus Categorías
+        </div>
+        <div class="card-body">
+            {% if categories %}
+                <ul class="list-group">
+                    {% for c in categories %}
+                        <li class="list-group-item">{{ c.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No tienes categorías creadas aún.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

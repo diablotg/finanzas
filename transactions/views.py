@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def dashboard(request):
     transaction_form = TransactionForm(user=request.user)
-    category_form = TransactionCategoryForm()
+    category_form = TransactionCategoryForm(user=request.user)
 
     if request.method == "POST":
         if "transaction_submit" in request.POST:
@@ -19,7 +19,7 @@ def dashboard(request):
                 return redirect("dashboard")
 
         elif "category_submit" in request.POST:
-            category_form = TransactionCategoryForm(request.POST)
+            category_form = TransactionCategoryForm(request.POST, user=request.user)
             if category_form.is_valid():
                 category = category_form.save(commit=False)
                 category.user = request.user
