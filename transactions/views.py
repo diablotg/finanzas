@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import TransactionCategory, Transaction
 from .forms import TransactionCategoryForm, TransactionForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
 
 @login_required
@@ -36,3 +37,17 @@ def dashboard(request):
         "categories": categories,
     }
     return render(request, "transactions/dashboard.html", context)
+
+
+@login_required
+def delete_transaction(request, id):
+    transaction = get_object_or_404(Transaction, id=id, user=request.user)
+    transaction.delete()
+    return redirect("dashboard")
+
+
+@login_required
+def delete_category(request, id):
+    category = get_object_or_404(TransactionCategory, id=id, user=request.user)
+    category.delete()
+    return redirect("dashboard")
