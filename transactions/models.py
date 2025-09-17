@@ -29,7 +29,7 @@ class Transaction(models.Model):
         (EXPENSE, "Expense"),
     ]
     transaction_type = models.CharField(
-        max_length=7, choices=TRANSACTION_TYPE_CHOICES, default=INCOME
+        max_length=7, choices=TRANSACTION_TYPE_CHOICES, default=EXPENSE
     )
 
     def __str__(self):
